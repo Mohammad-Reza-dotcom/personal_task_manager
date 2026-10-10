@@ -15,10 +15,11 @@ def save_tasks(tasks):
         json.dump(tasks, file, indent=4)
 
 
-def add_task(tasks, title):
+def add_task(tasks, title, priority):
     task = {
         "title": title,
-        "status": "pending"
+        "status": "pending",
+        "priority": priority
     }
 
     tasks.append(task)
@@ -32,12 +33,16 @@ def show_tasks(tasks):
         print("\nYour Tasks:")
 
         for i in range(len(tasks)):
+            priority = tasks[i].get("priority", "Medium")
+
             print(
                 i + 1,
                 "-",
                 tasks[i]["title"],
                 "-",
-                tasks[i]["status"]
+                tasks[i]["status"],
+                "- Priority:",
+                priority
             )
 
 
