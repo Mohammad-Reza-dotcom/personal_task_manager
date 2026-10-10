@@ -41,7 +41,7 @@ def show_tasks(tasks):
                 tasks[i]["title"],
                 "-",
                 tasks[i]["status"],
-                "- Priority:",
+                "- Task Priority:",
                 priority
             )
 
