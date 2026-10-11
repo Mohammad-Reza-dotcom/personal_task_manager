@@ -1,76 +1,54 @@
+from tasks import add_task, show_tasks
+
 import os
 
 from dotenv import load_dotenv
 
-from tasks import load_tasks
-from tasks import add_task
-from tasks import show_tasks
-from tasks import complete_task
-from tasks import delete_task
 
+
+
+
+name = input("Hello what your name:    ") 
+print(f"WELCOME {name}")
 
 load_dotenv()
 
-name = input("Enter your name: ")
-
-print("Welcome", name)
-
-tasks = load_tasks()
-
 admin_answer = input("Do you want to enter Admin Mode? (yes/no): ")
+
+
 
 if admin_answer.lower() == "yes":
     password = input("Enter admin password: ")
 
-    admin_password = os.getenv("TASK_MANAGER_ADMIN_PASSWORD")
+    admin_password = os.getenv("MANAGER_ADMIN_MODE")
 
     if password == admin_password:
         print("Admin Mode enabled.")
     else:
         print("Wrong password.")
 
+
+
+tasks = []
 while True:
-    print("\nPersonal Task Manager")
-    print("1. Add Task")
-    print("2. Show Tasks")
-    print("3. Complete Task")
-    print("4. Delete Task")
-    print("5. Exit")
+    task = input("Enter a task (or type 'done' to finish the code):   ")
 
-    choice = input("Choose an option: ")
-
-    if choice == "1":
-    title = input("Enter task title: ")
-
-    priority = input("Enter priority (Low/Medium/High): ")
-    priority = priority.capitalize()
-
-    while priority not in ["Low", "Medium", "High"]:
-        print("Invalid priority.")
-        priority = input("Enter priority (Low/Medium/High): ")
-        priority = priority.capitalize()
-
-    add_task(tasks, title, priority)
-    print("Task added.")
-
-    elif choice == "2":
-        show_tasks(tasks)
-
-    elif choice == "3":
-        show_tasks(tasks)
-
-        number = int(input("Enter task number: "))
-        complete_task(tasks, number)
-
-    elif choice == "4":
-        show_tasks(tasks)
-
-        number = int(input("Enter task number: "))
-        delete_task(tasks, number)
-
-    elif choice == "5":
-        print("Goodbye", name)
+    if task.lower() == "done":
         break
 
-    else:
-        print("Invalid option.")
+    priority = input("Enter priority (low/medium/high):  ").lower()
+
+    while priority not in ["low", "medium", "high"]:
+        print("Invalid priority!")
+        priority = input("Enter priority (low/medium/high): ").lower()
+
+    add_task(tasks, task, priority)
+
+    
+
+show_tasks(tasks)
+
+file = open("results.txt", "a")
+file.write(f"{name} -  {tasks}")
+
+file.close()
